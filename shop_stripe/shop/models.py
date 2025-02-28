@@ -2,8 +2,9 @@ from django.db import models
 
 class Item(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название товара")
-    description = models.TextField(blank=True, null=True, verbose_name="Описание товара")
-    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена товара")
+    description = models.TextField(default="", verbose_name="Описание товара")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена товара")
+    currency = models.CharField(max_length=10, default="USD", verbose_name="Валюта")
 
     class Meta:
         verbose_name = "Товар"
