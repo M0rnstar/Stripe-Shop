@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Купить {{ item.name }}</title>
     <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
     <h1>{{ item.name }}</h1>
     <p>{{ item.description }}</p>
-    <p>Цена: {{ item.price }}</p>
+    <p>Цена: {{ item.price }} {{ item.currency }}</p>
     <button id="buy-button">Купить</button>
 
     <script type="text/javascript">
       // Инициализация Stripe с публичным ключом
-      var stripe = Stripe('{{ stripe_publish_key }}');
+      var stripe = Stripe("{{ stripe_publish_key }}");
 
       // При клике по кнопке отправляем запрос на создание сессии
-      document.getElementById('buy-button').addEventListener('click', function() {
-        fetch("{% url 'buy_item' item.id %}")
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(session) {
-            return stripe.redirectToCheckout({ sessionId: session.id });
-          })
-          .then(function(result) {
-            if (result.error) {
-              alert(result.error.message);
-            }
-          })
-          .catch(function(error) {
-            console.error("Ошибка:", error);
-          });
-      });
+      document
+        .getElementById("buy-button")
+        .addEventListener("click", function () {
+          fetch("{% url 'buy_item' item.id %}")
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (session) {
+              return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+              if (result.error) {
+                alert(result.error.message);
+              }
+            })
+            .catch(function (error) {
+              console.error("Ошибка:", error);
+            });
+        });
     </script>
   </body>
 </html>
