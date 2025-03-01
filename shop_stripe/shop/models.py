@@ -3,7 +3,7 @@ from django.db import models
 class Item(models.Model):
     CURRENCY_CHOISES = (
         ('USD', 'Доллар'),
-        ('RUB', 'Рубль')
+        ('EUR', 'Евро')
     )
 
     name = models.CharField(max_length=255, verbose_name="Название товара")
