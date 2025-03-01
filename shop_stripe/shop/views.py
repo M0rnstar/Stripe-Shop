@@ -4,13 +4,15 @@ from django.http import JsonResponse, Http404
 from django.conf import settings
 from .models import Item
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
 def item_detail(request, id):
     item = get_object_or_404(Item, pk=id)
+    if item.currency == 'EUR':
+        publishable_key = settings.STRIPE_PUBLISHABLE_KEY_EUR
+    else:
+        publishable_key = settings.STRIPE_PUBLISHABLE_KEY_USD
     return render(request, 'item_detail.html', {
         'item': item,
-        'stripe_publish_key': settings.STRIPE_PUBLISHABLE_KEY
+        'stripe_publish_key': publishable_key
     })
 
 def buy_item(request, id):
@@ -18,6 +20,11 @@ def buy_item(request, id):
         item = Item.objects.get(pk=id)
     except Item.DoesNotExist:
         raise Http404("Товар не найден")
+    
+    if item.currency == 'EUR':
+        stripe.api_key = settings.STRIPE_SECRET_KEY_EUR
+    else:
+        stripe.api_key = settings.STRIPE_SECRET_KEY_USD
     
     try:
         session = stripe.checkout.Session.create(
