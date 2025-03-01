@@ -25,8 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("django_secret_key")
-STRIPE_SECRET_KEY = os.getenv("stripe_secret_key")
-STRIPE_PUBLISHABLE_KEY = os.getenv("stripe_publish_key")
+STRIPE_SECRET_KEY_USD = os.getenv("stripe_secret_key_usd")
+STRIPE_PUBLISHABLE_KEY_USD = os.getenv("stripe_publish_key_usd")
+STRIPE_SECRET_KEY_EUR = os.getenv("stripe_secret_key_eur")
+STRIPE_PUBLISHABLE_KEY_EUR = os.getenv("stripe_publish_key_eur")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
