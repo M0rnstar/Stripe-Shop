@@ -4,6 +4,10 @@ from django.http import JsonResponse, Http404
 from django.conf import settings
 from .models import Item
 
+def items_list(request):
+    items = Item.objects.all()
+    return render(request, 'items_list.html', {'items': items})
+
 def item_detail(request, id):
     item = get_object_or_404(Item, pk=id)
     if item.currency == 'EUR':
