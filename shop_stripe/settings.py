@@ -31,9 +31,13 @@ STRIPE_SECRET_KEY_EUR = os.getenv("stripe_secret_key_eur")
 STRIPE_PUBLISHABLE_KEY_EUR = os.getenv("stripe_publish_key_eur")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+else:
+    ALLOWED_HOSTS = os.environ.get("DEBUG", "True").split(",")
+
 
 
 # Application definition
